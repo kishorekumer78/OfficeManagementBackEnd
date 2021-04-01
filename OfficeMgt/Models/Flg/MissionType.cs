@@ -10,7 +10,7 @@ namespace OfficeMgt.Models.Flg
     public class MissionType
     {
         [Key]
-        public int Id { get; set; }
+        public int MissionTypeId { get; set; }
 
 
 
