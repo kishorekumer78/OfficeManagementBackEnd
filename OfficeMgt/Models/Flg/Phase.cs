@@ -16,7 +16,7 @@ namespace OfficeMgt.Models.Flg
         [Column(TypeName = "nvarchar(20)")]
         public string PhaseName { get; set; }
 
-        public virtual ICollection<Mission> Missions { get; set; }
+        //public virtual ICollection<Mission> Missions { get; set; }
 
         
 
