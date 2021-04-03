@@ -23,11 +23,31 @@ namespace OfficeMgt.Controllers
             _context = context;
         }
         // test purpose for development mode get all list of certain things in the home page
-        public async Task<ActionResult<IEnumerable<Mission>>> Index()
+        public async Task<IEnumerable<Mission>> Index()
         {
+            #region MyRegion
+            //return await (from m in _context.Missions
+            //              join t in _context.MissionTypes on m.MissionTypeId equals t.MissionTypeId
+            //              join p in _context.Phases on m.PhaseId equals p.PhaseId
+            //              select new Mission
+            //              {
+            //                  Id = m.Id,
+            //                  Name = m.Name,
+            //                  Duration = m.Duration,
+            //                  Aircraft = m.Aircraft,
+            //                  Syllabus = m.Syllabus,
+            //                  MissionTypeId = m.MissionTypeId,
+            //                  PhaseId = m.PhaseId,
+            //                  Type = m.Type,
+            //                  Phase = m.Phase
+            //              }).ToListAsync();
+            #endregion
 
-            return await _context.Missions.ToListAsync();
-             
+
+            return await _context.Missions
+                                .Include(m => m.Type)
+                                .Include(m => m.Phase).ToListAsync();
+
         }
 
         public IActionResult Privacy()

@@ -24,12 +24,16 @@ namespace OfficeMgt.Models.Flg
         [Column(TypeName ="nvarchar(50)")]
         public string Syllabus { get; set; }
 
+        
+        [Required]
+        public int MissionTypeId { get; set; }
+        public int PhaseId { get; set; }
+
         // Trg/ Ops/ VVIP/ Ferry/ Med Evac/
-        [Required]        
-        public virtual MissionType Type { get; set; }   
+        public MissionType Type { get; set; }   
 
         
-        public virtual Phase Phase { get; set; }   
+        public  Phase Phase { get; set; }   
 
 
 

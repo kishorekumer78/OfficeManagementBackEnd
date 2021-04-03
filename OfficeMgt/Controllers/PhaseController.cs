@@ -12,49 +12,47 @@ namespace OfficeMgt.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MissionController : ControllerBase
+    public class PhaseController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public MissionController(AppDbContext context)
+        public PhaseController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Mission
+        // GET: api/Phase
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Mission>>> GetMissions()
+        public async Task<ActionResult<IEnumerable<Phase>>> GetPhases()
         {
-            return await _context.Missions
-                                .Include(x => x.Type)
-                                .Include(x => x.Phase).ToListAsync();
+            return await _context.Phases.ToListAsync();
         }
 
-        // GET: api/Mission/5
+        // GET: api/Phase/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Mission>> GetMission(int id)
+        public async Task<ActionResult<Phase>> GetPhase(int id)
         {
-            var mission = await _context.Missions.FindAsync(id);
+            var phase = await _context.Phases.FindAsync(id);
 
-            if (mission == null)
+            if (phase == null)
             {
                 return NotFound();
             }
 
-            return mission;
+            return phase;
         }
 
-        // PUT: api/Mission/5
+        // PUT: api/Phase/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMission(int id, Mission mission)
+        public async Task<IActionResult> PutPhase(int id, Phase phase)
         {
-            if (id != mission.Id)
+            if (id != phase.PhaseId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(mission).State = EntityState.Modified;
+            _context.Entry(phase).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +60,7 @@ namespace OfficeMgt.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MissionExists(id))
+                if (!PhaseExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +73,36 @@ namespace OfficeMgt.Controllers
             return NoContent();
         }
 
-        // POST: api/Mission
+        // POST: api/Phase
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Mission>> PostMission(Mission mission)
+        public async Task<ActionResult<Phase>> PostPhase(Phase phase)
         {
-            _context.Missions.Add(mission);
+            _context.Phases.Add(phase);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMission", new { id = mission.Id }, mission);
+            return CreatedAtAction("GetPhase", new { id = phase.PhaseId }, phase);
         }
 
-        // DELETE: api/Mission/5
+        // DELETE: api/Phase/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMission(int id)
+        public async Task<IActionResult> DeletePhase(int id)
         {
-            var mission = await _context.Missions.FindAsync(id);
-            if (mission == null)
+            var phase = await _context.Phases.FindAsync(id);
+            if (phase == null)
             {
                 return NotFound();
             }
 
-            _context.Missions.Remove(mission);
+            _context.Phases.Remove(phase);
             await _context.SaveChangesAsync();
 
-            return NoContent(); //TODO:  have to send the deleted object for notification. 
+            return NoContent();
         }
 
-        private bool MissionExists(int id)
+        private bool PhaseExists(int id)
         {
-            return _context.Missions.Any(e => e.Id == id);
+            return _context.Phases.Any(e => e.PhaseId == id);
         }
     }
 }

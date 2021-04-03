@@ -2,7 +2,7 @@
 
 namespace OfficeMgt.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,26 +10,26 @@ namespace OfficeMgt.Migrations
                 name: "MissionTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    MissionTypeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MissionTypeName = table.Column<string>(type: "nvarchar(20)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MissionTypes", x => x.Id);
+                    table.PrimaryKey("PK_MissionTypes", x => x.MissionTypeId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Phases",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    PhaseId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PhaseName = table.Column<string>(type: "nvarchar(20)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Phases", x => x.Id);
+                    table.PrimaryKey("PK_Phases", x => x.PhaseId);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,35 +42,35 @@ namespace OfficeMgt.Migrations
                     Duration = table.Column<long>(type: "bigint", nullable: false),
                     Aircraft = table.Column<string>(type: "nvarchar(20)", nullable: false),
                     Syllabus = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    TypeId = table.Column<int>(type: "int", nullable: false),
-                    PhaseId = table.Column<int>(type: "int", nullable: true)
+                    MissionTypeId = table.Column<int>(type: "int", nullable: false),
+                    PhaseId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Missions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Missions_MissionTypes_TypeId",
-                        column: x => x.TypeId,
+                        name: "FK_Missions_MissionTypes_MissionTypeId",
+                        column: x => x.MissionTypeId,
                         principalTable: "MissionTypes",
-                        principalColumn: "Id",
+                        principalColumn: "MissionTypeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Missions_Phases_PhaseId",
                         column: x => x.PhaseId,
                         principalTable: "Phases",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "PhaseId",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Missions_MissionTypeId",
+                table: "Missions",
+                column: "MissionTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Missions_PhaseId",
                 table: "Missions",
                 column: "PhaseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Missions_TypeId",
-                table: "Missions",
-                column: "TypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

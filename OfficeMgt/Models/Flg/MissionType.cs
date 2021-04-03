@@ -10,7 +10,7 @@ namespace OfficeMgt.Models.Flg
     public class MissionType
     {
         [Key]
-        public int Id { get; set; }
+        public int MissionTypeId { get; set; }
 
 
 
@@ -18,7 +18,7 @@ namespace OfficeMgt.Models.Flg
         [Column(TypeName = "nvarchar(20)")]
         public string MissionTypeName { get; set; }
         
-        public virtual ICollection<Mission> Missions { get; set; }
+        //public virtual ICollection<Mission> Missions { get; set; }
 
 
     }
